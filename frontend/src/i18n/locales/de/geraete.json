@@ -1,0 +1,10 @@
+{
+  "geraet": "Gerät",
+  "typen": { "server": "Server", "switch": "Switch", "router": "Router", "firewall": "Firewall", "nas": "NAS", "patchpanel": "Patchpanel", "pdu": "Steckdosenleiste / PDU", "ups": "USV / UPS", "ap": "Access Point", "other": "Sonstiges" },
+  "status": { "active": "Aktiv", "planned": "Geplant", "maintenance": "Wartung", "retired": "Außer Betrieb" },
+  "einbau": { "full": "Volle Tiefe", "front": "Nur vorne", "rear": "Nur hinten" },
+  "einbauKurz": { "full": "Volle Tiefe", "front": "Vorne", "rear": "Hinten" },
+  "poe": { "poe": "PoE (802.3af, 15,4 W)", "poe+": "PoE+ (802.3at, 30 W)", "poe++": "PoE++ (802.3bt, bis 90 W)", "passive": "Passiv (24 V)" },
+  "poeKurz": { "poe": "PoE", "poe+": "PoE+", "poe++": "PoE++", "passive": "Passiv" },
+  "garantie": { "abgelaufenAm": "abgelaufen am {datum}", "abgelaufen": "abgelaufen", "heuteLang": "läuft heute ab", "morgenLang": "läuft morgen ab", "tageLang": "läuft in {tage} Tagen ab", "heute": "heute", "morgen": "morgen", "tageKurz": "noch {tage} Tage", "baldText": "{rest} ({datum})", "gueltigBis": "läuft bis {datum}", "bis": "bis {datum}" }
+}

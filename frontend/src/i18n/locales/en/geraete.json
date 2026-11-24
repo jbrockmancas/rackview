@@ -1,0 +1,10 @@
+{
+  "geraet": "Device",
+  "typen": { "server": "Server", "switch": "Switch", "router": "Router", "firewall": "Firewall", "nas": "NAS", "patchpanel": "Patch panel", "pdu": "Power strip / PDU", "ups": "UPS", "ap": "Access point", "other": "Other" },
+  "status": { "active": "Active", "planned": "Planned", "maintenance": "Maintenance", "retired": "Retired" },
+  "einbau": { "full": "Full depth", "front": "Front only", "rear": "Rear only" },
+  "einbauKurz": { "full": "Full depth", "front": "Front", "rear": "Rear" },
+  "poe": { "poe": "PoE (802.3af, 15.4 W)", "poe+": "PoE+ (802.3at, 30 W)", "poe++": "PoE++ (802.3bt, up to 90 W)", "passive": "Passive (24 V)" },
+  "poeKurz": { "poe": "PoE", "poe+": "PoE+", "poe++": "PoE++", "passive": "Passive" },
+  "garantie": { "abgelaufenAm": "expired on {datum}", "abgelaufen": "expired", "heuteLang": "expires today", "morgenLang": "expires tomorrow", "tageLang": "expires in {tage} days", "heute": "today", "morgen": "tomorrow", "tageKurz": "{tage} days left", "baldText": "{rest} ({datum})", "gueltigBis": "valid until {datum}", "bis": "until {datum}" }
+}
