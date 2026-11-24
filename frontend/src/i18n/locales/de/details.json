@@ -1,0 +1,8 @@
+{
+  "uebersicht": "Übersicht", "portsTab": "Ports ({anzahl})", "steckplaetzeTab": "Steckplätze ({belegt}/{gesamt})", "netzwerk": "IP & MAC", "notizen": "Notizen",
+  "ohneRack": "Ohne Rack", "einheit": "HE {start}", "einheiten": "HE {start}–{ende}", "hoeheWert": "{hoehe} HE", "gesamt": "{anzahl} gesamt", "verbunden": "{anzahl} verbunden", "poe": "{anzahl} PoE",
+  "hersteller": "Hersteller", "modell": "Modell", "typ": "Typ", "standort": "Standort", "hoehe": "Höhe", "einbauseite": "Einbauseite", "seriennummer": "Seriennummer", "gekauft": "Gekauft am", "ports": "Ports", "garantie": "Garantie",
+  "ip": "IP-Adresse", "mac": "MAC-Adresse", "vlan": "VLAN", "switchPort": "Switch-Port", "uplinkPort": "Uplink-Port", "vlanWert": "VLAN {wert}", "web": "Weboberfläche",
+  "foto": "Foto von {name}", "keinFoto": "Kein Foto", "hochladen": "Wird hochgeladen …", "fotoAendern": "Foto ändern", "fotoHinzufuegen": "Foto hinzufügen",
+  "keinePorts": "Für dieses Gerät sind noch keine Ports erfasst.", "bezeichnung": "Bezeichnung", "frei": "— frei —", "extern": "Anderes Gerät (Text)", "externBeispiel": "z. B. Kaffeemaschine", "notiz": "Notiz", "keineSteckplaetze": "Noch keine Steckplätze. Die Anzahl wird beim Gerät eingetragen („Gerät bearbeiten“ → Steckplätze).", "beschreibung": "Beschreibung", "keineNotizen": "Keine Beschreibung oder Notizen hinterlegt."
+}

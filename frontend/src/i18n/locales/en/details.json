@@ -1,0 +1,8 @@
+{
+  "uebersicht": "Overview", "portsTab": "Ports ({anzahl})", "steckplaetzeTab": "Outlets ({belegt}/{gesamt})", "netzwerk": "IP & MAC", "notizen": "Notes",
+  "ohneRack": "No rack", "einheit": "U {start}", "einheiten": "U {start}–{ende}", "hoeheWert": "{hoehe} U", "gesamt": "{anzahl} total", "verbunden": "{anzahl} connected", "poe": "{anzahl} PoE",
+  "hersteller": "Manufacturer", "modell": "Model", "typ": "Type", "standort": "Location", "hoehe": "Height", "einbauseite": "Mounting side", "seriennummer": "Serial number", "gekauft": "Purchased on", "ports": "Ports", "garantie": "Warranty",
+  "ip": "IP address", "mac": "MAC address", "vlan": "VLAN", "switchPort": "Switch port", "uplinkPort": "Uplink port", "vlanWert": "VLAN {wert}", "web": "Web interface",
+  "foto": "Photo of {name}", "keinFoto": "No photo", "hochladen": "Uploading …", "fotoAendern": "Change photo", "fotoHinzufuegen": "Add photo",
+  "keinePorts": "No ports recorded for this device yet.", "bezeichnung": "Label", "frei": "— free —", "extern": "Other device (text)", "externBeispiel": "e.g. coffee machine", "notiz": "Note", "keineSteckplaetze": "No outlets yet. Set the outlet count under Edit device → Outlets.", "beschreibung": "Description", "keineNotizen": "No description or notes recorded."
+}
