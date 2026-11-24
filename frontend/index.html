@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -7,25 +7,41 @@
     <meta name="color-scheme" content="light dark" />
     <title>RackView</title>
     <script>
-      // Helle oder dunkle Ansicht setzen, bevor etwas gezeichnet wird -
-      // sonst blitzt beim Laden kurz die falsche Ansicht auf.
+      // Helle oder dunkle Ansicht vor dem ersten Zeichnen setzen.
       (() => {
         try {
           const wunsch = localStorage.getItem('rackview-theme') || 'auto'
           const dunkel =
             wunsch === 'dark' ||
             (wunsch === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches)
-
           document.documentElement.dataset.theme = dunkel ? 'dark' : 'light'
         } catch {
-          // Privater Modus ohne localStorage: dann eben hell
           document.documentElement.dataset.theme = 'light'
         }
       })()
     </script>
+    <style>
+      .startanzeige { min-height: 100vh; margin: 0; display: grid; place-content: center; text-align: center; font-family: system-ui, sans-serif; }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div class="startanzeige" role="status" aria-live="polite">
+        <h1>RackView</h1>
+        <p id="startmeldung">Loading RackView…</p>
+      </div>
+    </div>
+    <script>
+      // Kleine Starttexte ohne Modul-Download; weitere Sprachen hier ergaenzen.
+      (() => {
+        const starttexte = { en: 'Loading RackView…', de: 'RackView wird geladen…' }
+        let sprache = 'en'
+        try { sprache = localStorage.getItem('rackview-language') || 'en' } catch {}
+        const ausgewaehlt = Object.prototype.hasOwnProperty.call(starttexte, sprache) ? sprache : 'en'
+        document.documentElement.lang = ausgewaehlt
+        document.getElementById('startmeldung').textContent = starttexte[ausgewaehlt]
+      })()
+    </script>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
