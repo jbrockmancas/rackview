@@ -1,0 +1,8 @@
+{
+  "status": { "active": "Active", "planned": "Planned", "faulty": "Faulty", "disconnected": "Disconnected" },
+  "direkt": "Direct", "port": "Port #{kennung}", "geraet": "Device #{kennung}",
+  "gesamt": "Connections", "aktiv": "active", "defekt": "faulty", "inaktiv": "planned / disconnected",
+  "suche": "Filter by device or port …", "filter": "Filter connections", "statusFilter": "Filter by status", "alleStatus": "All statuses",
+  "hinzufuegen": "+ Connection", "quelle": "Source", "richtung": "Direction", "ziel": "Target", "typ": "Type", "statusTitel": "Status", "aktionen": "Actions",
+  "bearbeiten": "Edit", "loeschen": "Delete", "keineTreffer": "No connections match this filter.", "leer": "No connections documented yet.", "erste": "Add first connection"
+}
