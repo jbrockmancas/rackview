@@ -1,0 +1,5 @@
+{
+  "geschwindigkeit": { "schnell": "10 Gbit/s und mehr", "multi": "2,5 / 5 Gbit/s", "gigabit": "1 Gbit/s", "langsam": "unter 1 Gbit/s", "unbekannt": "ohne Angabe" },
+  "titel": "Netzwerkplan", "inaktiv": "geplant / getrennt", "rack": "Rack {name}", "vlan": "VLAN {wert}",
+  "leer": "Noch keine Verbindungen dokumentiert", "erklaerung": "Der Plan entsteht aus den Port-Verbindungen zwischen deinen Geräten. Sobald die erste angelegt ist, erscheint sie hier.", "hinzufuegen": "Verbindung anlegen"
+}

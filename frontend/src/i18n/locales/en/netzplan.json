@@ -1,0 +1,5 @@
+{
+  "geschwindigkeit": { "schnell": "10 Gbit/s and above", "multi": "2.5 / 5 Gbit/s", "gigabit": "1 Gbit/s", "langsam": "below 1 Gbit/s", "unbekannt": "unspecified" },
+  "titel": "Network plan", "inaktiv": "planned / disconnected", "rack": "Rack {name}", "vlan": "VLAN {wert}",
+  "leer": "No connections documented yet", "erklaerung": "The plan is built from port connections between your devices. Once you add the first connection, it will appear here.", "hinzufuegen": "Add connection"
+}
