@@ -1,0 +1,9 @@
+{
+  "bezeichnung": "VLAN {kennung}",
+  "ohneVlan": "Ohne VLAN",
+  "nichtHinterlegt": "kein VLAN hinterlegt",
+  "keineGeraete": "Noch keine Geräte erfasst.",
+  "hinweis": "Grundlage ist das VLAN-Feld der Geräte. VLANs einzelner Ports sind hier noch nicht berücksichtigt.",
+  "geraetEinzahl": "{anzahl} Gerät",
+  "geraeteMehrzahl": "{anzahl} Geräte"
+}

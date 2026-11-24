@@ -1,0 +1,9 @@
+{
+  "bezeichnung": "VLAN {kennung}",
+  "ohneVlan": "No VLAN",
+  "nichtHinterlegt": "no VLAN recorded",
+  "keineGeraete": "No devices recorded yet.",
+  "hinweis": "Based on each device's VLAN field. VLANs assigned to individual ports are not included here yet.",
+  "geraetEinzahl": "{anzahl} device",
+  "geraeteMehrzahl": "{anzahl} devices"
+}
