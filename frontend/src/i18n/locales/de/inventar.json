@@ -1,0 +1,5 @@
+{
+  "geraete": "Geräte", "aktiv": "aktiv", "wartung": "geplant / Wartung", "inRacks": "belegte Racks", "garantieBeachten": "Garantie beachten", "garantieHinweis": "Abgelaufen oder läuft in den nächsten {tage} Tagen ab",
+  "suche": "Name, IP, MAC, Seriennummer …", "filter": "Geräte filtern", "typFilter": "Nach Typ filtern", "alleTypen": "Alle Typen", "statusFilter": "Nach Status filtern", "alleStatus": "Alle Status", "ortFilter": "Nach Rack oder Standort filtern", "ueberall": "Überall", "ohneRack": "Ohne Rack", "racks": "Racks", "standorte": "Standorte", "zuruecksetzen": "Filter zurücksetzen", "anzahl": "{anzahl} von {gesamt}",
+  "neu": "Neues Gerät anlegen", "rackZuerst": "Lege zuerst ein Rack an", "hinzufuegen": "+ Gerät", "geraet": "Gerät", "typ": "Typ", "standort": "Standort", "ip": "IP-Adresse", "ports": "Ports", "garantie": "Garantie", "status": "Status", "foto": "Foto von {name}", "keineTreffer": "Kein Gerät passt zu diesem Filter.", "leer": "Noch keine Geräte erfasst.", "einheit": "HE {start}", "einheiten": "HE {start}–{ende}"
+}

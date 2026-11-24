@@ -1,0 +1,5 @@
+{
+  "geraete": "Devices", "aktiv": "active", "wartung": "planned / maintenance", "inRacks": "racks in use", "garantieBeachten": "Warranty attention", "garantieHinweis": "Expired or expires within the next {tage} days",
+  "suche": "Name, IP, MAC, serial number …", "filter": "Filter devices", "typFilter": "Filter by type", "alleTypen": "All types", "statusFilter": "Filter by status", "alleStatus": "All statuses", "ortFilter": "Filter by rack or location", "ueberall": "Everywhere", "ohneRack": "No rack", "racks": "Racks", "standorte": "Locations", "zuruecksetzen": "Reset filters", "anzahl": "{anzahl} of {gesamt}",
+  "neu": "Add new device", "rackZuerst": "Create a rack first", "hinzufuegen": "+ Device", "geraet": "Device", "typ": "Type", "standort": "Location", "ip": "IP address", "ports": "Ports", "garantie": "Warranty", "status": "Status", "foto": "Photo of {name}", "keineTreffer": "No devices match this filter.", "leer": "No devices recorded yet.", "einheit": "U {start}", "einheiten": "U {start}–{ende}"
+}
