@@ -1,7 +1,16 @@
 import { ref } from 'vue'
 
 const dateien = import.meta.glob('./locales/*.json', { eager: true, import: 'default' })
-const kataloge = Object.fromEntries(Object.entries(dateien).map(([pfad, inhalt]) => [pfad.split('/').pop().replace('.json', ''), inhalt]))
+const kataloge = Object.fromEntries(Object.entries(dateien).map(([pfad, inhalt]) => [pfad.split('/').pop().replace('.json', ''), { ...inhalt }]))
+// Feature-Dateien: locales/en/racks.json wird als racks.* eingebunden.
+const bereichsDateien = import.meta.glob('./locales/*/*.json', { eager: true, import: 'default' })
+for (const [pfad, inhalt] of Object.entries(bereichsDateien)) {
+  const teile = pfad.split('/')
+  const kennung = teile[teile.length - 2]
+  const bereich = teile[teile.length - 1].replace('.json', '')
+  if (!kataloge[kennung]) kataloge[kennung] = {}
+  kataloge[kennung][bereich] = inhalt
+}
 export const sprachen = Object.keys(kataloge).sort()
 export const sprache = ref('en')
 const speicherschluessel = 'rackview-language'

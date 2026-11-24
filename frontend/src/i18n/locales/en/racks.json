@@ -1,0 +1,10 @@
+{
+  "hoehe": "{gesamt} U",
+  "ohneStandort": "No location",
+  "belegungBeschreibung": "{belegt} of {gesamt} rack units occupied",
+  "belegung": "{belegt} / {gesamt} U occupied",
+  "geraetEinzahl": "{anzahl} device",
+  "geraeteMehrzahl": "{anzahl} devices",
+  "nichtAktiv": "{anzahl} not active",
+  "neuesRack": "New rack"
+}

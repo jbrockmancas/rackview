@@ -1,0 +1,10 @@
+{
+  "hoehe": "{gesamt} HE",
+  "ohneStandort": "Ohne Standort",
+  "belegungBeschreibung": "{belegt} von {gesamt} Höheneinheiten belegt",
+  "belegung": "{belegt} / {gesamt} HE belegt",
+  "geraetEinzahl": "{anzahl} Gerät",
+  "geraeteMehrzahl": "{anzahl} Geräte",
+  "nichtAktiv": "{anzahl} nicht aktiv",
+  "neuesRack": "Neues Rack"
+}
