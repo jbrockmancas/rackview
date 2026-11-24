@@ -1,0 +1,4 @@
+{
+  "status": { "connected": "Verbunden", "free": "Frei", "faulty": "Defekt", "disabled": "Deaktiviert" },
+  "typen": { "ethernet": "Ethernet (RJ45)", "sfp": "SFP", "sfp+": "SFP+", "sfp28": "SFP28", "qsfp": "QSFP", "fiber": "Glasfaser", "power": "Strom", "console": "Konsole", "usb": "USB", "other": "Sonstiges" }
+}

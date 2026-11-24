@@ -1,0 +1,4 @@
+{
+  "status": { "connected": "Connected", "free": "Free", "faulty": "Faulty", "disabled": "Disabled" },
+  "typen": { "ethernet": "Ethernet (RJ45)", "sfp": "SFP", "sfp+": "SFP+", "sfp28": "SFP28", "qsfp": "QSFP", "fiber": "Fiber", "power": "Power", "console": "Console", "usb": "USB", "other": "Other" }
+}
