@@ -12,13 +12,13 @@
   <a href="https://alexanderschubert.github.io/rackview/"><img src="https://img.shields.io/badge/Projektseite-ansehen-0071e3" alt="Projektseite"></a>
 </p>
 
-> **English:** RackView documents server racks and home networks: devices in rack
-> units with front and rear view, ports and cable connections, network map, IPs and
-> VLANs, power outlets, warranty dates and QR labels. It ships as a single Docker
-> image with a built-in PostgreSQL database. The user interface is currently
-> **German only**. Quick start: see *Installation* below – the commands are the same
-> in any language. Built by Alexander Schubert with the help of Claude, an AI
-> assistant – see *Über das Projekt*.
+Deutsch | [English documentation](README-en.md)
+
+> In diesem Fork wird auf dem Branch `eng-trans` eine englisch-deutsche
+> Oberfläche entwickelt. Die Übersetzung ist noch unvollständig; die jüngsten
+> Änderungen sind noch nicht durch Build- und Browsertests geprüft. Die unten
+> verlinkten veröffentlichten Images und Unraid-Vorlagen gehören zum
+> Ursprungsprojekt und enthalten diese Branch-Änderungen nicht.
 
 ![RackView](docs/bilder/app-hell.png)
 
