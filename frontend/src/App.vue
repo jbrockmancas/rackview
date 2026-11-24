@@ -1,5 +1,7 @@
 <script setup>
 import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { uebersetzen } from './i18n/index.js'
+import Sprachwahl from './components/Sprachwahl.vue'
 import DeviceFaceplate from './components/DeviceFaceplate.vue'
 import PortSymbol from './components/PortSymbol.vue'
 import OutletSymbol from './components/OutletSymbol.vue'
@@ -169,33 +171,33 @@ const rackStatus = computed(() => {
   const liste = devices.value || []
 
   if (!liste.length) {
-    return { tone: 'neutral', label: 'Keine Geräte' }
+    return { tone: 'neutral', label: uebersetzen('dashboard.keineGeraete') }
   }
 
   const nichtAktiv = liste.filter((device) => (device.status || 'active') !== 'active')
 
   if (!nichtAktiv.length) {
-    return { tone: 'ok', label: 'Alle Geräte aktiv' }
+    return { tone: 'ok', label: uebersetzen('dashboard.alleAktiv') }
   }
 
   return {
     tone: 'warn',
-    label: `${nichtAktiv.length} von ${liste.length} nicht aktiv`,
+    label: uebersetzen('dashboard.nichtAktiv', { anzahl: nichtAktiv.length, gesamt: liste.length }),
   }
 })
 
 const pageSubtitle = computed(() => {
   if (!selectedRack.value) {
-    return 'Deine Infrastruktur übersichtlich dokumentiert.'
+    return uebersetzen('dashboard.infrastrukturText')
   }
 
-  const teile = [`${getRackHeight(selectedRack.value)} Höheneinheiten`]
+  const teile = [uebersetzen('dashboard.rackHoehe', { anzahl: getRackHeight(selectedRack.value) })]
 
   if (selectedRack.value.location) {
     teile.push(selectedRack.value.location)
   }
 
-  teile.push(`${usedUnits.value} HE belegt`)
+  teile.push(uebersetzen('dashboard.belegtWert', { anzahl: usedUnits.value }))
 
   return teile.join(' · ')
 })
@@ -717,7 +719,7 @@ const portDeviceGroups = computed(() => {
     .sort((a, b) => (b.id === aktuell) - (a.id === aktuell))
     .map((rack) => ({
       id: rack.id,
-      label: rack.id === aktuell ? `${rack.name} (aktuell)` : rack.name,
+      label: rack.id === aktuell ? uebersetzen('dashboard.aktuellesRack', { name: rack.name }) : rack.name,
       devices: allDevices.value
         .filter((device) => Number(device.rack_id) === Number(rack.id))
         .sort((a, b) => Number(b.start_unit) - Number(a.start_unit)),
@@ -815,7 +817,7 @@ function outletBelegt(platz) {
 
 /** Was steckt drin - fuer Kurzinfos am Mauszeiger */
 function outletName(platz) {
-  return platz?.connected_device?.name || platz?.external_label || 'frei'
+  return platz?.connected_device?.name || platz?.external_label || uebersetzen('dashboard.frei')
 }
 
 const outletCounts = computed(() => {
@@ -863,45 +865,46 @@ async function openOutletsOfDevice(device) {
 // und Lesezeichen, ohne zusaetzliche Router-Bibliothek.
 
 // Eigene Ansichten
-const VIEWS = {
-  dashboard: { title: 'Dashboard', subtitle: '' },
-  ip: { title: 'IP-Verwaltung', subtitle: 'Alle Adressen nach Netz sortiert, doppelte Vergaben markiert.' },
-  vlans: { title: 'VLANs', subtitle: 'Geräte nach VLAN gruppiert, mit dem jeweils genutzten Netz.' },
-  racks: { title: 'Racks', subtitle: 'Alle Racks im Überblick.' },
-  locations: { title: 'Standorte', subtitle: 'Geräte außerhalb der Racks – Access Points, Modems, Kameras.' },
-  devices: { title: 'Geräte', subtitle: 'Alle Geräte – in Racks wie an Standorten.' },
-  ports: { title: 'Ports', subtitle: 'Port-Belegung eines Geräts – über alle Racks wählbar.' },
-  connections: { title: 'Verbindungen', subtitle: 'Alle dokumentierten Port-Verbindungen.' },
-  network: { title: 'Netzwerkplan', subtitle: 'Topologie aus den Port-Verbindungen, über alle Racks.' },
-  export: { title: 'Export & Import', subtitle: 'Daten als CSV, JSON oder PDF herunterladen – oder eine Sicherung wieder einlesen.' },
-  labels: { title: 'Etiketten', subtitle: 'QR-Etiketten für Geräte drucken – A4-Bogen oder Etikettendrucker.' },
-  settings: { title: 'Einstellungen', subtitle: 'Dein Profil, dein Passwort und die Konten für RackView.' },
-}
+const VIEWS = computed(() => ({
+  dashboard: { title: uebersetzen('dashboard.titel_dashboard'), subtitle: uebersetzen('dashboard.untertitel_dashboard') },
+  ip: { title: uebersetzen('dashboard.titel_ip'), subtitle: uebersetzen('dashboard.untertitel_ip') },
+  vlans: { title: uebersetzen('dashboard.titel_vlans'), subtitle: uebersetzen('dashboard.untertitel_vlans') },
+  racks: { title: uebersetzen('dashboard.titel_racks'), subtitle: uebersetzen('dashboard.untertitel_racks') },
+  locations: { title: uebersetzen('dashboard.titel_locations'), subtitle: uebersetzen('dashboard.untertitel_locations') },
+  devices: { title: uebersetzen('dashboard.titel_devices'), subtitle: uebersetzen('dashboard.untertitel_devices') },
+  ports: { title: uebersetzen('dashboard.titel_ports'), subtitle: uebersetzen('dashboard.untertitel_ports') },
+  connections: { title: uebersetzen('dashboard.titel_connections'), subtitle: uebersetzen('dashboard.untertitel_connections') },
+  network: { title: uebersetzen('dashboard.titel_network'), subtitle: uebersetzen('dashboard.untertitel_network') },
+  export: { title: uebersetzen('dashboard.titel_export'), subtitle: uebersetzen('dashboard.untertitel_export') },
+  labels: { title: uebersetzen('dashboard.titel_labels'), subtitle: uebersetzen('dashboard.untertitel_labels') },
+  settings: { title: uebersetzen('dashboard.titel_settings'), subtitle: uebersetzen('dashboard.untertitel_settings') },
+}))
 
-const navGroups = [
+const navGroups = computed(() => [
   {
-    label: 'Arbeitsbereich',
+    label: uebersetzen('dashboard.arbeitsbereich'),
     items: [
-      { key: 'dashboard', icon: '▦', label: 'Dashboard' },
-      { key: 'racks', icon: '▥', label: 'Racks' },
-      { key: 'locations', icon: '⌂', label: 'Standorte' },
-      { key: 'devices', icon: '▣', label: 'Geräte' },
-      { key: 'ports', icon: '⇄', label: 'Ports' },
-      { key: 'connections', icon: '⌁', label: 'Verbindungen' },
-      { key: 'network', icon: '⌬', label: 'Netzwerkplan' },
+      { key: 'dashboard', icon: '▦', label: uebersetzen('dashboard.titel_dashboard') },
+      { key: 'racks', icon: '▥', label: uebersetzen('dashboard.titel_racks') },
+      { key: 'locations', icon: '⌂', label: uebersetzen('dashboard.titel_locations') },
+      { key: 'devices', icon: '▣', label: uebersetzen('dashboard.titel_devices') },
+      { key: 'ports', icon: '⇄', label: uebersetzen('dashboard.titel_ports') },
+      { key: 'connections', icon: '⌁', label: uebersetzen('dashboard.titel_connections') },
+      { key: 'network', icon: '⌬', label: uebersetzen('dashboard.titel_network') },
     ],
   },
   {
-    label: 'Verwaltung',
+    label: uebersetzen('dashboard.verwaltung'),
     items: [
-      { key: 'ip', icon: '◎', label: 'IP-Verwaltung' },
-      { key: 'vlans', icon: '⧉', label: 'VLANs' },
-      { key: 'export', icon: '⇅', label: 'Export & Import' },
-      { key: 'labels', icon: '⌗', label: 'Etiketten' },
-      { key: 'settings', icon: '⚙', label: 'Einstellungen' },
+      { key: 'ip', icon: '◎', label: uebersetzen('dashboard.titel_ip') },
+      { key: 'vlans', icon: '⧉', label: uebersetzen('dashboard.titel_vlans') },
+      { key: 'export', icon: '⇅', label: uebersetzen('dashboard.titel_export') },
+      { key: 'labels', icon: '⌗', label: uebersetzen('dashboard.titel_labels') },
+      { key: 'settings', icon: '⚙', label: uebersetzen('dashboard.titel_settings') },
     ],
   },
-]
+])
+
 
 const currentView = ref('dashboard')
 const activeNav = ref('dashboard')
@@ -914,7 +917,7 @@ const rackContext = computed(() => ['dashboard', 'racks'].includes(currentView.v
 // Racks und Ports zeigen dieselben Panels wie das Dashboard, nur anders
 // angeordnet (siehe Hauptbereich). Die Panels bleiben bewusst in App.vue:
 // Ihr CSS ist scoped und wuerde in einer Kindkomponente nicht greifen.
-const currentViewMeta = computed(() => VIEWS[currentView.value])
+const currentViewMeta = computed(() => VIEWS.value[currentView.value])
 
 function scrollToPanel(id) {
   // Nach einem Ansichtswechsel existiert das Panel erst nach dem Rendern
@@ -939,7 +942,7 @@ function readHash() {
   // Menue-Klick auf "Etiketten": ohne Vorauswahl beginnen
   if (key === 'labels') labelPreselect.value = []
 
-  if (VIEWS[key]) {
+  if (VIEWS.value[key]) {
     const wechsel = currentView.value !== key
     currentView.value = key
     activeNav.value = key
@@ -2034,7 +2037,7 @@ let rackDragScrollFrame = null
 let rackDragKlickSperre = 0
 
 function heBereich(start, hoehe) {
-  return hoehe > 1 ? `HE ${start}–${start + hoehe - 1}` : `HE ${start}`
+  return uebersetzen(hoehe > 1 ? 'dashboard.heBereich' : 'dashboard.heEinheit', { start, ende: start + hoehe - 1 })
 }
 
 // Geraet, das den Bereich belegt - oder null, wenn er frei ist
@@ -2406,11 +2409,11 @@ const rackDragHinweis = computed(() => {
   if (drag.zielRack) {
     return drag.gueltig
       ? `→ ${drag.zielRack.name}, ${heBereich(drag.zielStart, hoehe)}`
-      : `Kein Platz für ${hoehe} HE in „${drag.zielRack.name}"`
+      : uebersetzen('dashboard.keinPlatz', { hoehe, name: drag.zielRack.name })
   }
 
-  if (drag.zielStart === null) return 'Loslassen bricht ab'
-  if (drag.blockiert) return `Belegt durch „${drag.blockiert.name}"`
+  if (drag.zielStart === null) return uebersetzen('dashboard.dragAbbruch')
+  if (drag.blockiert) return uebersetzen('dashboard.blockiert', { name: drag.blockiert.name })
 
   return heBereich(drag.zielStart, hoehe)
 })
@@ -2618,7 +2621,7 @@ async function deletePort(port) {
 </script>
 
 <template>
-  <div v-if="!authChecked" class="auth-loading">RackView wird geladen …</div>
+  <div v-if="!authChecked" class="auth-loading">{{ uebersetzen('dashboard.laden') }}</div>
 
   <LoginView
     v-else-if="!currentUser"
@@ -2650,14 +2653,14 @@ async function deletePort(port) {
           @click="navOffen = !navOffen"
         >
           <span class="nav-toggle-icon">{{ navOffen ? '✕' : '☰' }}</span>
-          <span class="nav-toggle-text">{{ navOffen ? 'Menü schließen' : currentViewMeta.title }}</span>
+          <span class="nav-toggle-text">{{ navOffen ? uebersetzen('dashboard.menueSchliessen') : currentViewMeta.title }}</span>
         </button>
       </div>
       <nav
         id="hauptnavigation"
         class="sidebar-nav"
         :class="{ offen: navOffen }"
-        aria-label="Hauptnavigation"
+        :aria-label="uebersetzen('dashboard.hauptnavigation')"
       >
         <template v-for="gruppe in navGroups" :key="gruppe.label">
           <div class="nav-section-label">{{ gruppe.label }}</div>
@@ -2676,17 +2679,18 @@ async function deletePort(port) {
           </a>
         </template>
       </nav>
+      <Sprachwahl />
       <div class="sidebar-user">
         <a
           class="sidebar-user-link"
           href="#settings"
-          title="Profil und Einstellungen"
+          :title="uebersetzen('dashboard.profil')"
           @click="onNavClick({ key: 'settings' })"
         >
           <div class="avatar">{{ userInitials }}</div>
           <div><strong>{{ currentUser.name }}</strong><small>{{ currentUser.email }}</small></div>
         </a>
-        <button type="button" class="sidebar-logout" title="Abmelden" aria-label="Abmelden" @click="logout">
+        <button type="button" class="sidebar-logout" :title="uebersetzen('dashboard.abmelden')" :aria-label="uebersetzen('dashboard.abmelden')" @click="logout">
           ⎋
         </button>
       </div>
@@ -2694,15 +2698,15 @@ async function deletePort(port) {
     <header class="topbar">
       <div class="page-header">
         <div class="page-header-top">
-          <nav class="breadcrumb" aria-label="Pfad">
+          <nav class="breadcrumb" :aria-label="uebersetzen('dashboard.pfad')">
             <template v-if="!rackContext">
               RackView <span>/</span> {{ currentViewMeta.title }}
             </template>
             <template v-else-if="selectedRack">
-              Racks <span>/</span> {{ selectedRack.location || 'Ohne Standort' }}
+              Racks <span>/</span> {{ selectedRack.location || uebersetzen('dashboard.ohneStandort') }}
             </template>
             <template v-else>
-              RackView <span>/</span> Übersicht
+              RackView <span>/</span> {{ uebersetzen('dashboard.uebersicht') }}
             </template>
           </nav>
 
@@ -2710,8 +2714,8 @@ async function deletePort(port) {
             <button
               type="button"
               class="theme-toggle"
-              :title="themeAktiv === 'dark' ? 'Zur hellen Ansicht wechseln' : 'Zur dunklen Ansicht wechseln'"
-              :aria-label="themeAktiv === 'dark' ? 'Zur hellen Ansicht wechseln' : 'Zur dunklen Ansicht wechseln'"
+              :title="themeAktiv === 'dark' ? uebersetzen('dashboard.hell') : uebersetzen('dashboard.dunkel')"
+              :aria-label="themeAktiv === 'dark' ? uebersetzen('dashboard.hell') : uebersetzen('dashboard.dunkel')"
               @click="themeUmschalten"
             >
               {{ themeAktiv === 'dark' ? '☀' : '☾' }}
@@ -2724,8 +2728,8 @@ async function deletePort(port) {
                 ref="globalSearchInput"
                 v-model="globalQuery"
                 type="text"
-                placeholder="Suche nach Geräten, IPs, MAC …"
-                aria-label="Geräte durchsuchen"
+                :placeholder="uebersetzen('dashboard.suche')"
+                :aria-label="uebersetzen('dashboard.geraeteSuchen')"
                 autocomplete="off"
                 spellcheck="false"
                 @focus="globalSearchOpen = true"
@@ -2738,7 +2742,7 @@ async function deletePort(port) {
                 v-if="globalSearchOpen && globalQuery.trim().length >= 2"
                 class="global-search-results"
                 role="listbox"
-                aria-label="Suchergebnisse"
+                :aria-label="uebersetzen('dashboard.suchergebnisse')"
               >
                 <button
                   v-for="(treffer, index) in globalResults"
@@ -2758,8 +2762,8 @@ async function deletePort(port) {
                   <span class="global-search-result-info">
                     <strong>{{ treffer.device.name }}</strong>
                     <small>
-                      {{ treffer.rack ? treffer.rack.name : 'Ohne Rack' }}
-                      · HE {{ treffer.device.start_unit }}
+                      {{ treffer.rack ? treffer.rack.name : uebersetzen('dashboard.ohneRack') }}
+                      · {{ uebersetzen('dashboard.heEinheit', { start: treffer.device.start_unit }) }}
                     </small>
                   </span>
 
@@ -2767,12 +2771,12 @@ async function deletePort(port) {
                     v-if="treffer.grund.label !== 'Name'"
                     class="global-search-result-match"
                   >
-                    {{ treffer.grund.label }}: {{ treffer.grund.wert }}
+                    {{ uebersetzen('dashboard.sucheFelder.' + treffer.grund.label) }}: {{ treffer.grund.wert }}
                   </span>
                 </button>
 
                 <p v-if="!globalResults.length" class="global-search-empty">
-                  Keine Geräte gefunden.
+                  {{ uebersetzen('dashboard.keineSuchgeraete') }}
                 </p>
               </div>
             </div>
@@ -2782,7 +2786,7 @@ async function deletePort(port) {
         <div class="page-header-main">
           <div class="page-title">
             <h1>
-              {{ !rackContext ? currentViewMeta.title : selectedRack ? selectedRack.name : 'Rack-Dokumentation' }}
+              {{ !rackContext ? currentViewMeta.title : selectedRack ? selectedRack.name : uebersetzen('dashboard.rackDokumentation') }}
 
               <span
                 v-if="rackContext && selectedRack"
@@ -2803,11 +2807,11 @@ async function deletePort(port) {
                 type="button"
                 @click="openEditRackForm(selectedRack)"
               >
-                ✎ Rack bearbeiten
+                {{ uebersetzen('dashboard.rackBearbeiten') }}
               </button>
 
               <button class="secondary-button" type="button" @click="printRack">
-                ⎙ Als PDF drucken
+                {{ uebersetzen('dashboard.pdf') }}
               </button>
             </template>
 
@@ -2817,14 +2821,14 @@ async function deletePort(port) {
               type="button"
               @click="openNewRackForm"
             >
-              + Rack hinzufügen
+              {{ uebersetzen('dashboard.rackHinzufuegen') }}
             </button>
 
             <div v-if="selectedRack" class="page-menu">
               <button
                 class="secondary-button page-menu-toggle"
                 type="button"
-                aria-label="Weitere Aktionen"
+                :aria-label="uebersetzen('dashboard.weitereAktionen')"
                 aria-haspopup="menu"
                 :aria-expanded="showPageMenu"
                 @click="showPageMenu = !showPageMenu"
@@ -2838,7 +2842,7 @@ async function deletePort(port) {
                   role="menuitem"
                   @click="showPageMenu = false; openNewRackForm()"
                 >
-                  Neues Rack anlegen
+                  {{ uebersetzen('dashboard.neuesRack') }}
                 </button>
 
                 <button
@@ -2847,7 +2851,7 @@ async function deletePort(port) {
                   class="danger"
                   @click="showPageMenu = false; deleteRack(selectedRack)"
                 >
-                  Rack löschen …
+                  {{ uebersetzen('dashboard.rackLoeschen') }}
                 </button>
               </div>
             </div>
@@ -2970,15 +2974,15 @@ async function deletePort(port) {
     <section id="panel-racks" class="panel rack-view-panel">
       <div class="panel-heading">
         <div>
-          <span class="panel-kicker">Infrastruktur</span>
-          <h2>Rack-Ansicht</h2>
+          <span class="panel-kicker">{{ uebersetzen('dashboard.infrastruktur') }}</span>
+          <h2>{{ uebersetzen('dashboard.rackAnsicht') }}</h2>
         </div>
 
         <div class="panel-actions">
           <button
             v-if="selectedRack"
             class="icon-button"
-            title="Rack bearbeiten"
+            :title="uebersetzen('dashboard.rackBearbeitenTitel')"
             @click="openEditRackForm(selectedRack)"
           >
             ✎
@@ -3009,7 +3013,7 @@ async function deletePort(port) {
           @click="selectRack(rack)"
         >
           <span class="rack-selector-name">{{ rack.name }}</span>
-          <span class="rack-selector-meta">{{ rack.height_units }} HE</span>
+          <span class="rack-selector-meta">{{ uebersetzen('dashboard.einheiten', { anzahl: rack.height_units }) }}</span>
         </button>
       </div>
 
@@ -3017,18 +3021,18 @@ async function deletePort(port) {
         <div class="rack-stage-header">
           <div>
             <strong>{{ selectedRack.name }}</strong>
-            <span>{{ selectedRack.location || 'Kein Standort hinterlegt' }}</span>
+            <span>{{ selectedRack.location || uebersetzen('dashboard.keinStandort') }}</span>
           </div>
 
           <div class="rack-stage-actions">
-            <div class="rack-side-switch" role="group" aria-label="Rackansicht">
+            <div class="rack-side-switch" role="group" :aria-label="uebersetzen('dashboard.rackAnsichtLabel')">
               <button
                 type="button"
                 :class="{ active: rackSide === 'front' }"
                 :aria-pressed="rackSide === 'front'"
                 @click="rackSide = 'front'"
               >
-                Vorderseite
+                {{ uebersetzen('dashboard.vorneTitel') }}
               </button>
               <button
                 type="button"
@@ -3036,11 +3040,11 @@ async function deletePort(port) {
                 :aria-pressed="rackSide === 'rear'"
                 @click="rackSide = 'rear'"
               >
-                Rückseite
+                {{ uebersetzen('dashboard.hintenTitel') }}
               </button>
             </div>
 
-            <div class="rack-stage-meta">{{ getRackHeight(selectedRack) }} HE</div>
+            <div class="rack-stage-meta">{{ uebersetzen('dashboard.einheiten', { anzahl: getRackHeight(selectedRack) }) }}</div>
           </div>
         </div>
 
@@ -3066,7 +3070,7 @@ async function deletePort(port) {
                       dragging: rackDrag && rackDrag.aktiv && rackDrag.device.id === row.device.id,
                     }"
                     :style="{ '--device-span': getDeviceHeight(row.device) }"
-                    :title="`${row.device.name} – zum Verschieben ziehen`"
+                    :title="uebersetzen('dashboard.verschieben', { name: row.device.name })"
                     @pointerdown="startRackDrag($event, row.device)"
                     @click="onRackDeviceClick(row.device)"
                     @contextmenu="rackDrag && $event.preventDefault()"
@@ -3078,10 +3082,10 @@ async function deletePort(port) {
 
                   <!-- Frei auf dieser Seite; auf der anderen steht eventuell etwas -->
                   <span v-else-if="row.gegenueber" class="free-unit-label gegenueber">
-                    {{ rackSide === 'front' ? 'hinten' : 'vorne' }}: {{ row.gegenueber.name }}
+                    {{ rackSide === 'front' ? uebersetzen('dashboard.hinten') : uebersetzen('dashboard.vorne') }}: {{ row.gegenueber.name }}
                   </span>
 
-                  <span v-else-if="!row.device" class="free-unit-label">Frei</span>
+                  <span v-else-if="!row.device" class="free-unit-label">{{ uebersetzen('dashboard.frei') }}</span>
                 </div>
               </div>
 
@@ -3107,15 +3111,15 @@ async function deletePort(port) {
               @click="selectDevice(device)"
             >
               <span class="rack-device-row-badge">
-                {{ getDeviceHeight(device) }} HE
+                {{ uebersetzen('dashboard.einheiten', { anzahl: getDeviceHeight(device) }) }}
               </span>
 
               <span
                 v-if="getMountSide(device) !== 'full'"
                 class="rack-device-row-side"
-                :title="getMountSide(device) === 'front' ? 'Nur vorne eingebaut' : 'Nur hinten eingebaut'"
+                :title="getMountSide(device) === 'front' ? uebersetzen('dashboard.nurVorne') : uebersetzen('dashboard.nurHinten')"
               >
-                {{ getMountSide(device) === 'front' ? 'vorne' : 'hinten' }}
+                {{ getMountSide(device) === 'front' ? uebersetzen('dashboard.vorne') : uebersetzen('dashboard.hinten') }}
               </span>
 
               <span class="rack-device-row-info">
@@ -3135,55 +3139,54 @@ async function deletePort(port) {
             </div>
 
             <p v-if="!devicesTopDown.length" class="rack-device-list-empty">
-              Noch keine Geräte in diesem Rack.
+              {{ uebersetzen('dashboard.keineRackGeraete') }}
             </p>
           </div>
         </div>
 
         <div class="rack-legend">
-          <span><span class="legend-dot legend-active"></span>Aktiv</span>
-          <span><span class="legend-dot legend-warning"></span>Geplant / Wartung</span>
-          <span><span class="legend-dot legend-inactive"></span>Ausgemustert</span>
+          <span><span class="legend-dot legend-active"></span>{{ uebersetzen('dashboard.aktiv') }}</span>
+          <span><span class="legend-dot legend-warning"></span>{{ uebersetzen('dashboard.geplantWartung') }}</span>
+          <span><span class="legend-dot legend-inactive"></span>{{ uebersetzen('dashboard.ausgemustert') }}</span>
 
           <span class="rack-legend-spacer"></span>
 
-          <span class="rack-legend-hint">Geräte zum Verschieben ziehen, auch auf ein anderes Rack</span>
+          <span class="rack-legend-hint">{{ uebersetzen('dashboard.dragHinweis') }}</span>
 
           <span>
-            {{ getUsedRackUnits(selectedRack) }} von
-            {{ getRackHeight(selectedRack) }} HE belegt
+            {{ uebersetzen('dashboard.belegtGesamt', { belegt: getUsedRackUnits(selectedRack), gesamt: getRackHeight(selectedRack) }) }}
           </span>
         </div>
 
         <div class="rack-summary">
           <div class="summary-item">
-            <span>Geräte</span>
+            <span>{{ uebersetzen('dashboard.geraete') }}</span>
             <strong>{{ selectedRack.devices?.length || 0 }}</strong>
           </div>
 
           <div class="summary-item">
-            <span>Belegt</span>
-            <strong>{{ getUsedRackUnits(selectedRack) }} HE</strong>
+            <span>{{ uebersetzen('dashboard.belegt') }}</span>
+            <strong>{{ uebersetzen('dashboard.einheiten', { anzahl: getUsedRackUnits(selectedRack) }) }}</strong>
           </div>
 
           <div class="summary-item">
-            <span>Frei</span>
-            <strong>{{ getRackHeight(selectedRack) - getUsedRackUnits(selectedRack) }} HE</strong>
+            <span>{{ uebersetzen('dashboard.frei') }}</span>
+            <strong>{{ uebersetzen('dashboard.einheiten', { anzahl: getRackHeight(selectedRack) - getUsedRackUnits(selectedRack) }) }}</strong>
           </div>
         </div>
       </div>
 
       <div v-else class="empty-state">
         <div class="empty-state-icon">▤</div>
-        <h3>Noch kein Rack vorhanden</h3>
-        <p>Lege dein erstes Rack an, um Geräte und Ports zu verwalten.</p>
+        <h3>{{ uebersetzen('dashboard.keinRack') }}</h3>
+        <p>{{ uebersetzen('dashboard.erstesRackText') }}</p>
         <ol class="erststart-schritte">
-          <li><strong>Rack anlegen</strong><span>Name und Höhe in HE</span></li>
-          <li><strong>Geräte einsetzen</strong><span>in die freien Höheneinheiten des Racks</span></li>
-          <li><strong>Ports verbinden</strong><span>der Netzwerkplan zeichnet sich selbst</span></li>
+          <li><strong>{{ uebersetzen('dashboard.rackAnlegen') }}</strong><span>{{ uebersetzen('dashboard.rackAnlegenText') }}</span></li>
+          <li><strong>{{ uebersetzen('dashboard.geraeteEinsetzen') }}</strong><span>{{ uebersetzen('dashboard.geraeteEinsetzenText') }}</span></li>
+          <li><strong>{{ uebersetzen('dashboard.portsVerbinden') }}</strong><span>{{ uebersetzen('dashboard.portsVerbindenText') }}</span></li>
         </ol>
         <button class="primary-button" @click="openNewRackForm">
-          Erstes Rack erstellen
+          {{ uebersetzen('dashboard.erstesRack') }}
         </button>
       </div>
     </section>
@@ -3192,26 +3195,26 @@ async function deletePort(port) {
     <section id="panel-device" class="panel device-overview-panel">
       <div class="panel-heading">
         <div>
-          <span class="panel-kicker">Auswahl</span>
-          <h2>Gerätedetails</h2>
+          <span class="panel-kicker">{{ uebersetzen('dashboard.auswahl') }}</span>
+          <h2>{{ uebersetzen('dashboard.geraetedetails') }}</h2>
         </div>
 
         <div v-if="selectedDevice" class="device-panel-actions">
           <button class="secondary-button" type="button" @click="openDeviceDetails(selectedDevice)">
-            Verwalten
+            {{ uebersetzen('dashboard.verwalten') }}
           </button>
 
           <button
             class="secondary-button"
             type="button"
-            title="QR-Etikett für dieses Gerät drucken"
+            :title="uebersetzen('dashboard.etikettDrucken')"
             @click="openLabelsFor(selectedDevice)"
           >
-            ⌗ Etikett
+            {{ uebersetzen('dashboard.etikett') }}
           </button>
 
           <button class="secondary-button" type="button" @click="openEditDeviceForm(selectedDevice)">
-            ✎ Bearbeiten
+            {{ uebersetzen('dashboard.bearbeiten') }}
           </button>
         </div>
       </div>
@@ -3234,8 +3237,8 @@ async function deletePort(port) {
 
       <div v-else class="empty-state compact-empty">
         <div class="empty-state-icon">▣</div>
-        <h3>Kein Gerät ausgewählt</h3>
-        <p>Wähle ein Gerät in der Rack-Ansicht aus.</p>
+        <h3>{{ uebersetzen('dashboard.keinGeraet') }}</h3>
+        <p>{{ uebersetzen('dashboard.geraetWaehlen') }}</p>
       </div>
     </section>
   </section>
@@ -3252,15 +3255,15 @@ async function deletePort(port) {
     <section id="panel-ports" class="panel port-overview-panel">
       <div class="panel-heading">
         <div>
-          <span class="panel-kicker">{{ nurSteckplaetze ? 'Stromversorgung' : 'Verbindungen' }}</span>
-          <h2>{{ nurSteckplaetze ? 'Steckplätze' : 'Port-Übersicht' }}</h2>
+          <span class="panel-kicker">{{ nurSteckplaetze ? uebersetzen('dashboard.stromversorgung') : uebersetzen('dashboard.verbindungen') }}</span>
+          <h2>{{ nurSteckplaetze ? uebersetzen('dashboard.steckplaetze') : uebersetzen('dashboard.portUebersicht') }}</h2>
         </div>
 
         <select
           v-if="portDeviceGroups.length"
           v-model="portOverviewDeviceId"
           class="port-device-select"
-          aria-label="Gerät für die Anschlussübersicht"
+          :aria-label="uebersetzen('dashboard.anschlussGeraet')"
         >
           <optgroup v-for="gruppe in portDeviceGroups" :key="gruppe.id" :label="gruppe.label">
             <option v-for="device in gruppe.devices" :key="device.id" :value="device.id">
@@ -3270,11 +3273,11 @@ async function deletePort(port) {
         </select>
       </div>
 
-      <p v-if="overviewLoading" class="muted-empty">Anschlüsse werden geladen …</p>
+      <p v-if="overviewLoading" class="muted-empty">{{ uebersetzen('dashboard.anschluesseLaden') }}</p>
 
       <template v-else-if="overviewPorts.length || overviewOutlets.length">
         <template v-if="overviewPorts.length">
-          <h3 v-if="overviewOutlets.length" class="port-gruppen-titel erste">Netzwerkports</h3>
+          <h3 v-if="overviewOutlets.length" class="port-gruppen-titel erste">{{ uebersetzen('dashboard.netzwerkports') }}</h3>
 
           <div class="port-grid">
             <button
@@ -3299,10 +3302,10 @@ async function deletePort(port) {
           </div>
 
           <div class="port-legend">
-            <span><i class="port-legend-dot port-connected"></i>Verbunden ({{ portCounts.connected }})</span>
-            <span><i class="port-legend-dot port-free"></i>Frei ({{ portCounts.free }})</span>
-            <span v-if="portCounts.faulty"><i class="port-legend-dot port-faulty"></i>Defekt ({{ portCounts.faulty }})</span>
-            <span v-if="portCounts.disabled"><i class="port-legend-dot port-disabled"></i>Deaktiviert ({{ portCounts.disabled }})</span>
+            <span><i class="port-legend-dot port-connected"></i>{{ uebersetzen('dashboard.verbunden') }} ({{ portCounts.connected }})</span>
+            <span><i class="port-legend-dot port-free"></i>{{ uebersetzen('dashboard.frei') }} ({{ portCounts.free }})</span>
+            <span v-if="portCounts.faulty"><i class="port-legend-dot port-faulty"></i>{{ uebersetzen('dashboard.defekt') }} ({{ portCounts.faulty }})</span>
+            <span v-if="portCounts.disabled"><i class="port-legend-dot port-disabled"></i>{{ uebersetzen('dashboard.deaktiviert') }} ({{ portCounts.disabled }})</span>
             <span v-if="portCounts.poe"><i class="port-legend-dot poe"></i>PoE ({{ portCounts.poe }})</span>
             <span v-if="portCounts.uplink"><i class="port-legend-dot uplink"></i>SFP / Uplink ({{ portCounts.uplink }})</span>
           </div>
@@ -3311,7 +3314,7 @@ async function deletePort(port) {
         <!-- Steckplaetze einer Leiste oder USV. Hat das Geraet beides,
              stehen sie unter den Buchsen und bekommen eine Ueberschrift. -->
         <template v-if="overviewOutlets.length">
-          <h3 v-if="overviewPorts.length" class="port-gruppen-titel">Steckplätze</h3>
+          <h3 v-if="overviewPorts.length" class="port-gruppen-titel">{{ uebersetzen('dashboard.steckplaetze') }}</h3>
 
           <div class="port-grid">
             <button
@@ -3323,7 +3326,7 @@ async function deletePort(port) {
                 belegt: outletBelegt(platz),
                 active: selectedOutlet && selectedOutlet.id === platz.id,
               }"
-              :title="`Platz ${platz.position} – ${outletBelegt(platz) ? outletName(platz) : 'frei'}`"
+              :title="`${uebersetzen('dashboard.platz', { position: platz.position })} – ${outletBelegt(platz) ? outletName(platz) : uebersetzen('dashboard.frei')}`"
               @click="selectOutlet(platz)"
             >
               <span class="port-cell-number">{{ platz.position }}</span>
@@ -3332,21 +3335,20 @@ async function deletePort(port) {
           </div>
 
           <div class="port-legend">
-            <span><i class="port-legend-dot belegt"></i>Belegt ({{ outletCounts.belegt }})</span>
-            <span><i class="port-legend-dot"></i>Frei ({{ outletCounts.frei }})</span>
+            <span><i class="port-legend-dot belegt"></i>{{ uebersetzen('dashboard.belegt') }} ({{ outletCounts.belegt }})</span>
+            <span><i class="port-legend-dot"></i>{{ uebersetzen('dashboard.frei') }} ({{ outletCounts.frei }})</span>
           </div>
         </template>
       </template>
 
       <div v-else class="empty-state compact-empty">
         <div class="empty-state-icon">⇄</div>
-        <h3>Nichts erfasst</h3>
+        <h3>{{ uebersetzen('dashboard.nichtsErfasst') }}</h3>
 
         <p v-if="portOverviewDevice">
-          Für „{{ portOverviewDevice.name }}" sind weder Ports noch Steckplätze
-          angelegt. Beides richtest du in den Gerätedetails ein.
+          {{ uebersetzen('dashboard.anschluesseLeer', { name: portOverviewDevice.name }) }}
         </p>
-        <p v-else>In diesem Rack sind noch keine Geräte.</p>
+        <p v-else>{{ uebersetzen('dashboard.rackLeer') }}</p>
 
         <button
           v-if="portOverviewDevice"
@@ -3354,7 +3356,7 @@ async function deletePort(port) {
           type="button"
           @click="openDeviceDetails(portOverviewDevice)"
         >
-          Gerät öffnen
+          {{ uebersetzen('dashboard.geraetOeffnen') }}
         </button>
       </div>
     </section>
@@ -3363,8 +3365,8 @@ async function deletePort(port) {
     <section class="panel port-details-panel">
       <div class="panel-heading">
         <div>
-          <span class="panel-kicker">Anschluss</span>
-          <h2>{{ selectedOutlet ? 'Platz-Details' : 'Port-Details' }}</h2>
+          <span class="panel-kicker">{{ uebersetzen('dashboard.anschluss') }}</span>
+          <h2>{{ selectedOutlet ? uebersetzen('dashboard.platzDetails') : uebersetzen('dashboard.portDetails') }}</h2>
         </div>
       </div>
 
@@ -3386,18 +3388,18 @@ async function deletePort(port) {
 
         <dl class="detail-list">
           <div>
-            <dt>Typ</dt>
+            <dt>{{ uebersetzen('dashboard.typ') }}</dt>
             <dd>{{ portTypeLabel(selectedPort.port_type) }}</dd>
           </div>
 
           <div>
-            <dt>Geschwindigkeit</dt>
+            <dt>{{ uebersetzen('dashboard.geschwindigkeit') }}</dt>
             <dd>{{ selectedPort.speed || '–' }}</dd>
           </div>
 
           <div>
             <dt>PoE</dt>
-            <dd>{{ selectedPort.poe ? getPoeLabel(selectedPort.poe) : 'Kein PoE' }}</dd>
+            <dd>{{ selectedPort.poe ? getPoeLabel(selectedPort.poe) : uebersetzen('dashboard.keinPoe') }}</dd>
           </div>
 
           <div>
@@ -3406,7 +3408,7 @@ async function deletePort(port) {
           </div>
 
           <div>
-            <dt>Verbunden mit</dt>
+            <dt>{{ uebersetzen('dashboard.verbundenMit') }}</dt>
             <dd>
               <template v-if="selectedPort.connection?.peer_device">
                 {{ selectedPort.connection.peer_device.name }}
@@ -3419,7 +3421,7 @@ async function deletePort(port) {
           </div>
 
           <div v-if="selectedPort.notes">
-            <dt>Notizen</dt>
+            <dt>{{ uebersetzen('dashboard.notizen') }}</dt>
             <dd>{{ selectedPort.notes }}</dd>
           </div>
         </dl>
@@ -3432,7 +3434,7 @@ async function deletePort(port) {
           </div>
 
           <div class="port-detail-title">
-            <h3>Platz {{ selectedOutlet.position }}</h3>
+            <h3>{{ uebersetzen('dashboard.platz', { position: selectedOutlet.position }) }}</h3>
             <p>{{ portOverviewDevice ? portOverviewDevice.name : '' }}</p>
           </div>
 
@@ -3440,13 +3442,13 @@ async function deletePort(port) {
             class="port-state-badge"
             :class="outletBelegt(selectedOutlet) ? 'port-connected' : 'port-free'"
           >
-            {{ outletBelegt(selectedOutlet) ? 'Belegt' : 'Frei' }}
+            {{ outletBelegt(selectedOutlet) ? uebersetzen('dashboard.belegt') : uebersetzen('dashboard.frei') }}
           </span>
         </div>
 
         <dl class="detail-list">
           <div>
-            <dt>Angeschlossen</dt>
+            <dt>{{ uebersetzen('dashboard.angeschlossen') }}</dt>
             <dd>
               <!-- Ein Geraet aus dem eigenen Bereich fuehrt zu sich selbst -->
               <template v-if="selectedOutlet.connected_device">
@@ -3465,7 +3467,7 @@ async function deletePort(port) {
               <!-- Oder freier Text fuer alles, was nicht im Rack steht -->
               <template v-else-if="selectedOutlet.external_label">
                 {{ selectedOutlet.external_label }}
-                <span class="port-peer-port">· außerhalb des Racks</span>
+                <span class="port-peer-port">· {{ uebersetzen('dashboard.ausserhalb') }}</span>
               </template>
 
               <template v-else>–</template>
@@ -3473,17 +3475,17 @@ async function deletePort(port) {
           </div>
 
           <div v-if="selectedOutlet.connected_device && rackName(selectedOutlet.connected_device.rack_id)">
-            <dt>Steht in</dt>
+            <dt>{{ uebersetzen('dashboard.stehtIn') }}</dt>
             <dd>{{ rackName(selectedOutlet.connected_device.rack_id) }}</dd>
           </div>
 
           <div v-if="selectedOutlet.label">
-            <dt>Beschriftung</dt>
+            <dt>{{ uebersetzen('dashboard.beschriftung') }}</dt>
             <dd>{{ selectedOutlet.label }}</dd>
           </div>
 
           <div v-if="selectedOutlet.notes">
-            <dt>Notizen</dt>
+            <dt>{{ uebersetzen('dashboard.notizen') }}</dt>
             <dd>{{ selectedOutlet.notes }}</dd>
           </div>
         </dl>
@@ -3494,17 +3496,17 @@ async function deletePort(port) {
           class="secondary-button port-detail-aktion"
           @click="openOutletsOfDevice(portOverviewDevice)"
         >
-          Steckplätze bearbeiten
+          {{ uebersetzen('dashboard.steckplaetzeBearbeiten') }}
         </button>
       </div>
 
       <div v-else class="empty-state compact-empty">
         <div class="empty-state-icon">⇄</div>
-        <h3>{{ nurSteckplaetze ? 'Kein Platz ausgewählt' : 'Kein Port ausgewählt' }}</h3>
+        <h3>{{ nurSteckplaetze ? uebersetzen('dashboard.keinPlatzAuswahl') : uebersetzen('dashboard.keinPortAuswahl') }}</h3>
         <p>
           {{ nurSteckplaetze
-            ? 'Wähle einen Steckplatz aus der Übersicht.'
-            : 'Wähle einen Port aus der Übersicht.' }}
+            ? uebersetzen('dashboard.platzWaehlen')
+            : uebersetzen('dashboard.portWaehlen') }}
         </p>
       </div>
     </section>
@@ -3513,13 +3515,13 @@ async function deletePort(port) {
     <section v-if="isDashboard" id="panel-network" class="panel network-plan-panel">
       <div class="panel-heading">
         <div>
-          <span class="panel-kicker">Topologie</span>
-          <h2>Netzwerkplan</h2>
+          <span class="panel-kicker">{{ uebersetzen('dashboard.topologie') }}</span>
+          <h2>{{ uebersetzen('dashboard.netzwerkplan') }}</h2>
         </div>
 
         <span v-if="connections.length" class="network-plan-count">
           {{ connections.length }}
-          {{ connections.length === 1 ? 'Verbindung' : 'Verbindungen' }}
+          {{ connections.length === 1 ? uebersetzen('dashboard.verbindung') : uebersetzen('dashboard.verbindungen') }}
         </span>
       </div>
 
