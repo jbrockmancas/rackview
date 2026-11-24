@@ -1,0 +1,8 @@
+{
+  "bogen": "A4 sheet", "bogenText": "3 × 8 labels, 70 × 37 mm (e.g. Avery Zweckform 3474)", "rolle": "Label printer", "rolleText": "One label per page, 62 × 29 mm (e.g. Brother QL)",
+  "format": "Format", "aufdruck": "Label content", "mitRack": "Rack and rack unit, or location", "mitIp": "IP address", "mitModell": "Manufacturer and model", "freiLassen": "Skip initial label positions",
+  "qrVor": "The QR code links to", "qrNach": "and opens the device directly in RackView. To scan it, you must be on the same network and signed in to RackView.",
+  "suche": "Name, IP, serial number …", "filter": "Filter devices", "ortFilter": "Filter by rack or location", "ueberall": "Everywhere", "racks": "Racks", "standorte": "Locations", "alle": "Select all", "leeren": "Clear selection",
+  "etikett": "{anzahl} label", "etiketten": "{anzahl} labels", "seite": "{anzahl} page", "seiten": "{anzahl} pages", "drucken": "⎙ Print", "ohneRack": "No rack", "keineGeraete": "No devices found.", "vorschau": "Preview", "auswaehlen": "Select devices on the left to print labels for them.",
+  "ohneNamen": "Unnamed", "einheit": "U {start}", "einheiten": "U {start}–{ende}", "druckTitel": "RackView labels", "popup": "The browser blocked the print window. Please allow pop-ups for RackView."
+}

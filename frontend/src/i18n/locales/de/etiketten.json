@@ -1,0 +1,8 @@
+{
+  "bogen": "A4-Bogen", "bogenText": "3 × 8 Etiketten, 70 × 37 mm (z. B. Avery Zweckform 3474)", "rolle": "Etikettendrucker", "rolleText": "Ein Etikett je Seite, 62 × 29 mm (z. B. Brother QL)",
+  "format": "Format", "aufdruck": "Aufdruck", "mitRack": "Rack und Höheneinheit bzw. Standort", "mitIp": "IP-Adresse", "mitModell": "Hersteller und Modell", "freiLassen": "Erste Felder frei lassen",
+  "qrVor": "Der QR-Code führt zu", "qrNach": "und öffnet das Gerät direkt in RackView. Zum Scannen muss man im selben Netz und in RackView angemeldet sein.",
+  "suche": "Name, IP, Seriennummer …", "filter": "Geräte filtern", "ortFilter": "Nach Rack oder Standort filtern", "ueberall": "Überall", "racks": "Racks", "standorte": "Standorte", "alle": "Alle auswählen", "leeren": "Auswahl leeren",
+  "etikett": "{anzahl} Etikett", "etiketten": "{anzahl} Etiketten", "seite": "{anzahl} Seite", "seiten": "{anzahl} Seiten", "drucken": "⎙ Drucken", "ohneRack": "Ohne Rack", "keineGeraete": "Keine Geräte gefunden.", "vorschau": "Vorschau", "auswaehlen": "Wähle links die Geräte aus, für die du Etiketten drucken willst.",
+  "ohneNamen": "Ohne Namen", "einheit": "HE {start}", "einheiten": "HE {start}–{ende}", "druckTitel": "RackView-Etiketten", "popup": "Der Browser hat das Druckfenster blockiert. Bitte Pop-ups für RackView erlauben."
+}
