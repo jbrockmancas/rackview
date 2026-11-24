@@ -1,0 +1,13 @@
+{
+  "titel": "Locations",
+  "geraeteDort": "Devices at locations",
+  "erklaerung": "Everything outside the rack: access points, modems, cameras, and switches behind the TV. Track ports, IP addresses, and connections for these devices just like rack-mounted devices.",
+  "hinzufuegen": "+ Location",
+  "geraetHinzufuegen": "+ Device",
+  "geraetEinzahl": "{anzahl} device",
+  "geraeteMehrzahl": "{anzahl} devices",
+  "bearbeiten": "Edit “{name}”",
+  "foto": "Photo of {name}",
+  "ortLeer": "Nothing has been added here yet.",
+  "keineStandorte": "No locations created yet. A location complements a rack—for devices that do not occupy rack units."
+}

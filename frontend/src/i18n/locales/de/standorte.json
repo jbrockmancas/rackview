@@ -1,0 +1,13 @@
+{
+  "titel": "Standorte",
+  "geraeteDort": "Geräte dort",
+  "erklaerung": "Alles, was nicht im Rack hängt: Access Points, Modems, Kameras, Switches hinter dem Fernseher. Ports, IP-Adressen und Verbindungen führen diese Geräte genau wie die im Rack.",
+  "hinzufuegen": "+ Standort",
+  "geraetHinzufuegen": "+ Gerät",
+  "geraetEinzahl": "{anzahl} Gerät",
+  "geraeteMehrzahl": "{anzahl} Geräte",
+  "bearbeiten": "„{name}“ bearbeiten",
+  "foto": "Foto von {name}",
+  "ortLeer": "Hier ist noch nichts eingetragen.",
+  "keineStandorte": "Noch kein Standort angelegt. Ein Standort ist das Gegenstück zum Rack – für alles, was keine Höheneinheiten hat."
+}
