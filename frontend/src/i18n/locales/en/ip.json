@@ -1,0 +1,8 @@
+{
+  "geraete": "Devices", "mitIp": "with IP address", "netze": "Networks (/24)", "doppelteIps": "Duplicate IPs",
+  "filterPlatzhalter": "Filter by name, IP, MAC, VLAN …", "filterLabel": "Filter list",
+  "adresseEinzahl": "{anzahl} address", "adressenMehrzahl": "{anzahl} addresses",
+  "ipAdresse": "IP address", "geraet": "Device", "typ": "Type", "standort": "Location", "macAdresse": "MAC address", "vlan": "VLAN",
+  "doppelt": "duplicate", "ohneIp": "Without IP address ({anzahl})", "keineTreffer": "No matches for this filter.", "keineGeraete": "No devices recorded yet.",
+  "ungueltig": "Not a valid IPv4 address", "rackEinheit": "U {einheit}"
+}

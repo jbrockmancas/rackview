@@ -1,0 +1,8 @@
+{
+  "geraete": "Geräte", "mitIp": "mit IP-Adresse", "netze": "Netze (/24)", "doppelteIps": "Doppelte IPs",
+  "filterPlatzhalter": "Filtern nach Name, IP, MAC, VLAN …", "filterLabel": "Liste filtern",
+  "adresseEinzahl": "{anzahl} Adresse", "adressenMehrzahl": "{anzahl} Adressen",
+  "ipAdresse": "IP-Adresse", "geraet": "Gerät", "typ": "Typ", "standort": "Standort", "macAdresse": "MAC-Adresse", "vlan": "VLAN",
+  "doppelt": "doppelt", "ohneIp": "Ohne IP-Adresse ({anzahl})", "keineTreffer": "Keine Treffer für diesen Filter.", "keineGeraete": "Noch keine Geräte erfasst.",
+  "ungueltig": "Keine gültige IPv4-Adresse", "rackEinheit": "HE {einheit}"
+}
