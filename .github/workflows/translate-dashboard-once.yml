@@ -1,0 +1,35 @@
+name: Translate dashboard once
+on:
+  push:
+    branches: [eng-trans]
+    paths: [.github/workflows/translate-dashboard-once.yml]
+permissions:
+  contents: read
+jobs:
+  translate:
+    if: github.repository == 'jbrockmancas/rackview' && github.ref == 'refs/heads/eng-trans'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: eng-trans
+      - name: Apply guarded source translation
+        run: python3 .github/scripts/translate-dashboard-once.py
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+      - name: Build frontend
+        working-directory: frontend
+        run: npm run build
+      - name: Commit translation to eng-trans
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add frontend/src/App.vue frontend/src/i18n/locales/en/dashboard.json frontend/src/i18n/locales/de/dashboard.json
+          git rm .github/scripts/translate-dashboard-once.py
+          git diff --cached --check
+          git commit -m 'Translate sidebar and dashboard English/German UI'
+          git push origin HEAD:eng-trans
